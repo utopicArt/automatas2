@@ -1,0 +1,101 @@
+body{
+    margin: 0;
+    padding: 0;
+    width:100%;
+    height:100%;
+    background-image: url("../img/copia2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: bottom;
+}
+@-webkit-keyframes fadeEffect{
+    from {
+        background-position: 0% 0%;
+    }
+    to{
+        background-position: 0% 100%;
+    }
+}
+
+input{
+    text-align: center;
+}
+table input{
+    width:50%;
+}
+
+.main{
+    position: absolute;
+    width: 40%;
+    height: 45%;
+    background-color: #FFF;
+    text-align: center;
+    top:28%;
+    left: 30%;
+}
+.main #cabecera{
+    border-style: solid;
+    border-width: 0 0 1px;
+    border-color: #000000;
+    padding: 1%;
+}
+
+#main-question{
+    margin-top: 6%;
+}#main-question button{
+    cursor: pointer;
+    transition: 0.5s all;
+    width: 200px;
+    height: 30px;
+    margin-top: 13%;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none!important;
+    color:#FFF;
+    background-color: #D83748;
+}
+#main-question button:active{
+    transform: scale(1.1);
+}
+
+.table-container{
+    display:none;
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    top:25%;
+    text-align: center;
+}
+.table-left, .table-right{
+    float: left;
+    width: 23%;
+    height: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: firebrick:
+}
+table {
+    overflow: auto;
+    background-color: #FFF;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+.arrow{
+    cursor: pointer;
+    margin-top: 5%;
+    float: left;
+}
+tr td:first-child{
+    background-color: #F2F2F2;
+}
+th:not(:first-child){
+    background-color: #F2F2F2;
+}

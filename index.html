@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>AFND a AFD</title>
+        <link rel="stylesheet" href="style/main.css"/>
+        <script type="text/javascript" src="./src/jquery.js"></script>
+        <script type="text/javascript" src="./src/main.js"></script>
+    </head>
+    <body>
+        <div class="main">
+            <div id="cabecera">
+                <span>Especificaciones del autómata</span>
+            </div>
+            <div id="main-question">
+                <p>Cantidad de entradas del AFND</p>
+                <input id="num-entradas" min="0" type="number" required>              
+                <p>Cantidad de estados</p>
+                <input id="num-estados" min="0" type="number" required><br/>  
+                <button>Crear Tabla de Transición</button>
+            </div>
+        </div>
+        <div class="table-container">
+            <div class="table-left">
+                <table>
+                    <tr id="thead">
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="arrow">
+                <img src="./img/arrow.png"/>
+            </div>
+            <div class="table-right">
+                <table>
+                    <tr id="tright">
+                        <th></th>
+                    </tr>
+                </table>                
+            </div>
+        </div>
+    </body>
+</html>
