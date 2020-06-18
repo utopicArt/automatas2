@@ -9,7 +9,30 @@ $(document).ready(function(){
     var estadoInicial;
     var estadoAceptacion;
     var edo = new Array();
+    const enGlobal = /((->)|[\*]|[,])/;
 
+    /*
+        const chunkLove = /([']|["]|[=]|[(-)]|[--]|[==])/;
+        
+        if (!chunkLove.test($("#getUsr").val())&&!chunkLove.test($("#getPss").val())) {}
+    */
+    /*
+        |--------|--------|--------|-------|
+        |        | ROJO   |  ROJO  |  ROJO |
+        |        |        |        |       |
+        |________|________|________|_______|
+        |        |        |        |       |
+        |  AZUL  |  VERDE | VERDE  | VERDE |
+        |________|________|________|_______|
+        |        |        |        |       |
+        |  AZUL  |  VERDE | VERDE  | VERDE |
+        |________|________|________|_______|
+        |        |        |        |       |
+        |  AZUL  |  VERDE | VERDE  | VERDE |
+        |________|________|________|_______|        
+        
+    */
+    
 
     $('button').click(function(){
         num_estados = parseInt($('#num-estados').val());
@@ -75,11 +98,13 @@ $(document).ready(function(){
         //Guarda las filas
         for(var i=0;i<num_estados;i++){
             verde[i] = new Array(num_estados);
-            for(var j=0;j<=num_entradas;j++){
-                verde[i][j]=$(".table-left #a-"+i+" #estado-"+j).val();
+            for(var j=0;j<num_entradas;j++){
+                var temp = $(".table-left #a-"+i+" #estado-"+(j+1)).val();
+                verde[i][j]= (temp!=null?temp:"");
+                temp=undefined;delete(temp);
                 //console.log("["+i+"]["+j+"].- "+ verde[i][j]);
             }
-        }      
+        }
         for(var i=0;i<num_entradas;i++){ 
             $("#base_right-"+i).val(rojo[i]);   
         }
@@ -107,13 +132,38 @@ $(document).ready(function(){
             }
         }
         if(initStateFlag&&acceptStateFlag){
-            stepOne();
+            verificarEstados();
         }else{
             alert("[!]Asegúrese de haber indicado el estado inicial y el o los estados de aceptación.");
         }
     }
     
-    function stepOne(){
+    function verificarEstados(){
+        var flag = false;
+        verde.forEach(item1 =>{
+            item1.forEach(buscar =>{
+                azul.forEach(en =>{
+                    if(buscar.replace(enGlobal,"")==en.replace(enGlobal,"")&&buscar.length>0&&!flag){
+                        console.log("Se encontró en estado");
+                        flag = true;
+                    }else{
+                        console.log(buscar+".- "+(flag?"":"No")+" pertenece a "+en);
+                    }
+                });
+                console.log(flag);
+                flag=false;
+            });
+        });
+    }
+
+});
+
+
+
+
+
+
+    /*function stepOne(){
         //Agrega el header
         for(var i=0;i<num_entradas;i++){
             $('#tright').append("<th>"+rojo[i]+"</th>");
@@ -136,82 +186,4 @@ $(document).ready(function(){
         //</Ahora si viene lo chido>
         var dato;
         checarEstado();
-    }
-    
-    function buscarPalabra(estado){
-        var largo = parseInt(estado.length);
-        var flag = false;
-        var masUno = 0;
-        edo = [];
-        console.log("Hola,comenzaré a buscar "+estado);
-        for(var i=0;i<largo;i++){
-            for(var j=0;j<num_estados;j++){
-                //Hacer con banderas para que se almacenen y en caso de que no sea igual verificar 
-                //si es verdadero no hacver nada
-                //Si es falso no hacer nada para que no se sobreescriba el estado
-                //console.log("Actual: ["+i+"]["+j+"] con el valor "+estado.substring(i,i+1)+"\nBuscando en "+azul[j]+"");
-                switch(estado.substring(i,i+1)){
-                    case azul[j]:
-                        if(!verificarEncontrado(estado.substring(i,i+1))){
-                            edo.push(estado.substring(i,i+1));
-                            console.log("Encontrado en estados --"+estado.substring(i,i+1)+"--");
-                        }
-                    break;
-                    case estadoInicial:
-                        if(!verificarEncontrado(estado.substring(i,i+1))){
-                            edo.push(estado.substring(i,i+1));
-                            console.log("Encontrado en estado inicial --"+estado.substring(i,i+1)+"--");                           
-                        }                       
-                    break;
-                    case estadoAceptacion:
-                        if(!verificarEncontrado(estado.substring(i,i+1))){
-                            edo.push(estado.substring(i,i+1));
-                            console.log("Encontrado en estado de aceptación --"+estado.substring(i,i+1)+"--");                            
-                        }                      
-                    break;
-                    default:
-                        if(!verificarEncontrado(estado.substring(i,i+1))){
-                            edo.push(estado.substring(i,i+1));
-                            if(masUno==1){
-                                console.log("["+i+"]["+j+"].- No encontré el valor");
-                                nuevoEstado();                               
-                            }
-                            masUno=1;
-                            //return true;                           
-                        }
-                }
-            }
-        }
-        //Esto ya nos va a devolver el estado completo "pqr" p.ej.
-        return edo;
-    }
-    
-    function verificarEncontrado(dato){
-        var largo = parseInt(edo.length);
-        for(var i=0;i<largo;i++){
-            if(dato==edo[i]){
-               return true;
-            }
-        }
-        return false;
-    }
-    
-    function nuevoEstado(){
-        var largo = parseInt(edo.length);
-        var completo = "";
-        for(i=0;i<largo;i++){
-            completo += edo[i];
-            console.log("Valor: "+edo[i]);
-        }
-        $(".table-right tbody").append("<tr><td>"+completo+"</td></tr>");
-    }
-    
-    function checarEstado(){
-        for(var i=0;i<num_estados;i++){
-            for(var j=1;j<=num_entradas;j++){
-                buscarPalabra('pq');
-            }
-        }
-    }
-
-});
+    }*/
