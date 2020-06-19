@@ -149,6 +149,11 @@ $(document).ready(function(){
     
     function verificarEstados(){
         var flag = false;
+        //<Limpiar tabla de la derecha>
+        $("#tright th").remove();
+        $(".table-right tr:not(:first-child)").remove();
+        $("#tright").append("<th></th>");
+        //</Limpiar tabla de la derecha>        
         verde.forEach(item =>{
             item.forEach(buscar =>{
                 azul.forEach(en =>{
@@ -227,6 +232,7 @@ $(document).ready(function(){
             //setIn++;
         }
         //</Obtener el largo del ultimo elemento en azul>
+        verificarEstados();
     }
     
     //Función que buscará el nuevo par ordenado en los estados
