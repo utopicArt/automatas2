@@ -194,18 +194,25 @@ $(document).ready(function(){
     var nuevo;
     var actual;
     var rojoAvance;
+    var rojoAvance2;
     function setearNuevo(){
         var largoAzul = parseInt(azul.length);
         largoAzul = largoAzul-1;
         rojoAvance=0;
+        rojoAvance2=0;
         var setIn = parseInt(num_estadosNuevo);
         setIn=setIn-1;
+        var verdeTemporal = verde;
+        verde = new Array(new Array(num_estadosNuevo), new Array(num_entradas));
+        verde = verdeTemporal;
+        console.log(verde);
         
         //<Obtener el largo del ultimo elemento en azul>
         for(var i=0;i<num_entradasNuevo;i++){
             nuevo="";
-            //rojoAvance=i
-            verde[num_estadosNuevo] = new Array(num_entradas);
+            //rojoAvance2=i
+            rojoAvance=i;
+            verde[setIn] = new Array(num_entradas);
             for(var estado of azul[largoAzul]){
                 actual = estado;
                 azul.forEach(verificarNuevo);            
@@ -216,6 +223,8 @@ $(document).ready(function(){
             console.log("El valor en 0 equivale a --["+nuevo+"]--");
             console.log("Se trató de setear ["+setIn+"]["+i+"]");            
             verde[setIn][i] = nuevo;
+            console.log(verde);
+            setIn++;
         }
         //</Obtener el largo del ultimo elemento en azul>
     }
