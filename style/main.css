@@ -28,7 +28,9 @@ table input{
 .main{
     position: absolute;
     width: 40%;
+    min-width: 40%!important;
     height: 45%;
+    min-height: 45%!important;
     background-color: #FFF;
     text-align: center;
     top:28%;

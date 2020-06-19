@@ -1,8 +1,10 @@
 $(document).ready(function(){
     var requireField=true;
     $('body').css('animation','fadeEffect 3s');
+    var num_estadosNuevo;
     var num_estados;
     var num_entradas;
+    var num_entradasNuevo;
     var rojo = new Array();
     var azul = new Array();
     var verde;
@@ -36,7 +38,9 @@ $(document).ready(function(){
 
     $('button').click(function(){
         num_estados = parseInt($('#num-estados').val());
+        num_estadosNuevo = num_estados;
         num_entradas = parseInt($('#num-entradas').val());
+        num_entradasNuevo = num_entradas;
         requireField = (num_estados>0?false:true);
         requireField = (num_entradas>0?false:true);
         if(!requireField){
@@ -80,22 +84,27 @@ $(document).ready(function(){
         azul = [];
         rojo = [];
         verde = [];
+        num_estados = parseInt($('#num-estados').val());
+        num_estadosNuevo = num_estados;
+        num_entradas = parseInt($('#num-entradas').val());
+        num_entradasNuevo = num_entradas;
         //<Limpiar tabla de la derecha>
+        console.clear();
         $("#tright th").remove();
         $(".table-right tr:not(:first-child)").remove();
         $("#tright").append("<th></th>");
         //</Limpiar tabla de la derecha>
         
         verde = new Array(new Array(num_estados), new Array(num_entradas));
-        //guarda la base de arriba
+        //Guarda rojo
         for(var i=0;i<num_entradas;i++){
             rojo.push($(".table-left th #base-"+i).val());
         }
-        //guarda la columna de la izquiera
+        //Guarda azul
         for(var i=0;i<num_estados;i++){
             azul.push($(".table-left #a-"+i+" #estado-0").val());
         }
-        //Guarda las filas
+        //Guarda verde
         for(var i=0;i<num_estados;i++){
             verde[i] = new Array(num_estados);
             for(var j=0;j<num_entradas;j++){
@@ -140,21 +149,88 @@ $(document).ready(function(){
     
     function verificarEstados(){
         var flag = false;
-        verde.forEach(item1 =>{
-            item1.forEach(buscar =>{
+        verde.forEach(item =>{
+            item.forEach(buscar =>{
                 azul.forEach(en =>{
                     if(buscar.replace(enGlobal,"")==en.replace(enGlobal,"")&&buscar.length>0&&!flag){
-                        console.log("Se encontró en estado");
+                        //console.log("Se encontró en estado");
                         flag = true;
-                    }else{
+                    }/*else{
                         console.log(buscar+".- "+(flag?"":"No")+" pertenece a "+en);
-                    }
+                    }*/
                 });
-                console.log(flag);
+                //console.log(flag);
+                if(!flag&&buscar.length>0){
+                    azul.push(buscar);
+                    num_estadosNuevo++;
+                    setearNuevo();
+                }
                 flag=false;
             });
         });
+        agregarHeader();
     }
+    
+    function agregarHeader(){
+        //<Agrega rojo>
+        for(var i=0;i<num_entradas;i++){
+            $('#tright').append("<th>"+rojo[i]+"</th>");
+        }
+        //</Agrega rojo>
+        //<Agrega azul>
+        for(var i=0;i<num_estadosNuevo;i++){
+            $(".table-right tbody").append("<tr><td>"+azul[i]+"</td></tr>");
+        }
+        //</Agrega azul>
+        //<Agrega verde>
+        for(var i=2;i<num_estadosNuevo;i++){
+            for(var j=0;j<num_entradasNuevo;j++){
+                $(".table-right tbody tr:nth-child("+i+")").append("<td>"+verde[(i-2)][j]+"</td>");                  
+            }
+        }        
+        //</Agrega verde>
+    }
+    
+    var nuevo;
+    var actual;
+    var rojoAvance;
+    function setearNuevo(){
+        var largoAzul = parseInt(azul.length);
+        largoAzul = largoAzul-1;
+        rojoAvance=0;
+        var setIn = parseInt(num_estadosNuevo);
+        setIn=setIn-1;
+        
+        //<Obtener el largo del ultimo elemento en azul>
+        for(var i=0;i<num_entradasNuevo;i++){
+            nuevo="";
+            //rojoAvance=i
+            verde[num_estadosNuevo] = new Array(num_entradas);
+            for(var estado of azul[largoAzul]){
+                actual = estado;
+                azul.forEach(verificarNuevo);            
+            }
+            //$(".table-right tbody").append("<tr><td>"+nuevo+"</td></tr>");
+            //console.log($(".table-right tbody tr:nth-child("+num_estadosNuevo+")").val());
+            //$(".table-right tbody tr:last-child").append("<td>"+nuevo+"</td>");
+            console.log("El valor en 0 equivale a --["+nuevo+"]--");
+            console.log("Se trató de setear ["+setIn+"]["+i+"]");            
+            verde[setIn][i] = nuevo;
+        }
+        //</Obtener el largo del ultimo elemento en azul>
+    }
+    
+    //Función que buscará el nuevo par ordenado en los estados
+    function verificarNuevo(estado, index){
+        //console.log("El dato "+estado+"\nSe encuentra en el indice["+index+"]");
+        if(actual==estado.replace(enGlobal,"")){
+            nuevo+=verde[index][rojoAvance];
+            console.log("Verde["+index+"][0] equivale a: "+verde[index][rojoAvance]);
+        }else{
+            nuevo+="";
+        }
+    }
+    
 
 });
 
