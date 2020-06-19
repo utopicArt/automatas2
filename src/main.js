@@ -83,12 +83,9 @@ $(document).ready(function(){
         num_estadosNuevo = num_estados;
         num_entradas = parseInt($('#num-entradas').val());
         num_entradasNuevo = num_entradas;
-        //<Limpiar tabla de la derecha>
-        console.clear();
-        $("#tright th").remove();
-        $(".table-right tr:not(:first-child)").remove();
-        $("#tright").append("<th></th>");
-        //</Limpiar tabla de la derecha>
+        //<Limpia tabla de la derecha>
+        cleanTable();
+        //</Limpia tabla de la derecha>
         
         verde = new Array(new Array(num_estados), new Array(num_entradas));
         //Guarda rojo
@@ -141,17 +138,11 @@ $(document).ready(function(){
     }
     
     function verificarEstados(){
-        var flag = false;
-        //<Limpiar tabla de la derecha>
-        $("#tright th").remove();
-        $(".table-right tr:not(:first-child)").remove();
-        $("#tright").append("<th></th>");
-        //</Limpiar tabla de la derecha>        
+        var flag = false;       
         verde.forEach(item =>{
             item.forEach(buscar =>{
                 azul.forEach(en =>{
                     if(buscar.replace(enGlobal,"")==en.replace(enGlobal,"")&&buscar.length>0&&!flag){
-                        //console.log("Se encontró en estado");
                         flag = true;
                     }
                 });
@@ -163,7 +154,7 @@ $(document).ready(function(){
                 flag=false;
             });
         });
-        agregarHeader();
+        
     }
     
     function agregarHeader(){
@@ -178,9 +169,9 @@ $(document).ready(function(){
         }
         //</Agrega azul>
         //<Agrega verde>
-        for(var i=2;i<num_estadosNuevo;i++){
+        for(var i=0;i<num_estadosNuevo;i++){
             for(var j=0;j<num_entradasNuevo;j++){
-                $(".table-right tbody tr:nth-child("+i+")").append("<td>"+verde[(i-2)][j]+"</td>");                  
+                $(".table-right tbody tr:nth-child("+(i+2)+")").append("<td>"+verde[(i)][j]+"</td>");                  
             }
         }        
         //</Agrega verde>
@@ -215,7 +206,11 @@ $(document).ready(function(){
             verde[setIn][i] = nuevo;
         }
         //</Obtener el largo del ultimo elemento en azul>
-        console.log(verde);
+        console.log("Valor rojo"+rojo);
+        console.log("Valor azul"+azul);
+        console.log("Valor verde"+verde);
+        cleanTable();
+        agregarHeader();
         verificarEstados();
     }
     
@@ -227,5 +222,13 @@ $(document).ready(function(){
         }else{
             nuevo+="";
         }
+    }
+    
+    function cleanTable(){
+        //<Limpia tabla de la derecha> 
+        $("#tright th").remove();
+        $(".table-right tr:not(:first-child)").remove();
+        $("#tright").append("<th></th>");
+        //</Limpia tabla de la derecha>          
     }
 });
