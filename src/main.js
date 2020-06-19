@@ -208,11 +208,11 @@ $(document).ready(function(){
         console.log(verde);
         
         //<Obtener el largo del ultimo elemento en azul>
+        verde[setIn] = new Array(num_entradasNuevo);
         for(var i=0;i<num_entradasNuevo;i++){
             nuevo="";
             //rojoAvance2=i
             rojoAvance=i;
-            verde[setIn] = new Array(num_entradas);
             for(var estado of azul[largoAzul]){
                 actual = estado;
                 azul.forEach(verificarNuevo);            
@@ -224,7 +224,7 @@ $(document).ready(function(){
             console.log("Se trató de setear ["+setIn+"]["+i+"]");            
             verde[setIn][i] = nuevo;
             console.log(verde);
-            setIn++;
+            //setIn++;
         }
         //</Obtener el largo del ultimo elemento en azul>
     }
