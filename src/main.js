@@ -14,11 +14,6 @@ $(document).ready(function(){
     const enGlobal = /((->)|[\*]|[,])/;
 
     /*
-        const chunkLove = /([']|["]|[=]|[(-)]|[--]|[==])/;
-        
-        if (!chunkLove.test($("#getUsr").val())&&!chunkLove.test($("#getPss").val())) {}
-    */
-    /*
         |--------|--------|--------|-------|
         |        | ROJO   |  ROJO  |  ROJO |
         |        |        |        |       |
@@ -111,7 +106,6 @@ $(document).ready(function(){
                 var temp = $(".table-left #a-"+i+" #estado-"+(j+1)).val();
                 verde[i][j]= (temp!=null?temp:"");
                 temp=undefined;delete(temp);
-                //console.log("["+i+"]["+j+"].- "+ verde[i][j]);
             }
         }
         for(var i=0;i<num_entradas;i++){ 
@@ -124,7 +118,6 @@ $(document).ready(function(){
         var initStateFlag = false;
         var acceptStateFlag = false;        
         
-        //console.clear();
         for(var i=0;i<num_estados;i++){
             if($(".table-left #a-"+i+" #estado-0").val().length>=2){
                 if($(".table-left #a-"+i+" #estado-0").val().substring(0,2)=='->'){
@@ -160,11 +153,8 @@ $(document).ready(function(){
                     if(buscar.replace(enGlobal,"")==en.replace(enGlobal,"")&&buscar.length>0&&!flag){
                         //console.log("Se encontró en estado");
                         flag = true;
-                    }/*else{
-                        console.log(buscar+".- "+(flag?"":"No")+" pertenece a "+en);
-                    }*/
+                    }
                 });
-                //console.log(flag);
                 if(!flag&&buscar.length>0){
                     azul.push(buscar);
                     num_estadosNuevo++;
@@ -221,23 +211,16 @@ $(document).ready(function(){
             for(var estado of azul[largoAzul]){
                 actual = estado;
                 azul.forEach(verificarNuevo);            
-            }
-            //$(".table-right tbody").append("<tr><td>"+nuevo+"</td></tr>");
-            //console.log($(".table-right tbody tr:nth-child("+num_estadosNuevo+")").val());
-            //$(".table-right tbody tr:last-child").append("<td>"+nuevo+"</td>");
-            console.log("El valor en 0 equivale a --["+nuevo+"]--");
-            console.log("Se trató de setear ["+setIn+"]["+i+"]");            
+            }            
             verde[setIn][i] = nuevo;
-            console.log(verde);
-            //setIn++;
         }
         //</Obtener el largo del ultimo elemento en azul>
+        console.log(verde);
         verificarEstados();
     }
     
     //Función que buscará el nuevo par ordenado en los estados
     function verificarNuevo(estado, index){
-        //console.log("El dato "+estado+"\nSe encuentra en el indice["+index+"]");
         if(actual==estado.replace(enGlobal,"")){
             nuevo+=verde[index][rojoAvance];
             console.log("Verde["+index+"][0] equivale a: "+verde[index][rojoAvance]);
@@ -245,36 +228,4 @@ $(document).ready(function(){
             nuevo+="";
         }
     }
-    
-
 });
-
-
-
-
-
-
-    /*function stepOne(){
-        //Agrega el header
-        for(var i=0;i<num_entradas;i++){
-            $('#tright').append("<th>"+rojo[i]+"</th>");
-        }
-        //<Agrega la columna izquiera>
-        for(var i=0;i<num_estados;i++){
-            $(".table-right tbody").append("<tr><td>"+azul[i]+"</td></tr>");
-        }
-        //nuevoEstado();
-        //</Agrega la columan iquierda>
-        //<Ahora si viene lo chido>
-        $(".table-right tbody tr:nth-child(2)").append("<td>"+verde[0][(num_entradas-1)]+"</td>");
-        $(".table-right tbody tr:nth-child(2)").append("<td>"+verde[0][(num_entradas)]+"</td>");
-        $(".table-right tbody tr:nth-child(3)").append("<td>"+verde[1][(num_entradas)]+"</td>");
-        for(var i=2;i<num_estados;i++){
-            $(".table-right tbody tr:nth-child("+(i+1)+")").append("<td>"+verde[(i-1)][1]+"</td>");  
-        }
-        $(".table-right tbody tr:last-child").append("<td>"+verde[0][1]+verde[1][1]+"</td>");
-        $(".table-right tbody tr:last-child").append("<td>"+verde[0][(num_entradas)]+verde[1][(num_entradas)]+"</td>");
-        //</Ahora si viene lo chido>
-        var dato;
-        checarEstado();
-    }*/
