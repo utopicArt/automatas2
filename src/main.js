@@ -11,7 +11,7 @@ $(document).ready(function(){
     var estadoInicial;
     var estadoAceptacion;
     var edo = new Array();
-    const enGlobal = /((->)|[\*]|[,])/;
+    const enGlobal = /([0-9]|(->)|[\*]|[,])/;
 
     /*
         |--------|--------|--------|-------|
